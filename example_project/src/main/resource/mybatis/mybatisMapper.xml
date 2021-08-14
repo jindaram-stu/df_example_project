@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mybatis.mybatisMapper">
+	
+	<resultMap type="HashMap" id="myPageInfo">
+		<id column="client_name" property="client_name"/>
+		<id column="client_id" property="client_id"/>
+		<id column="client_email" property="client_email"/>
+		<id column="client_address" property="client_address"/>
+		<id column="client_tel" property="client_tel"/>
+		<id column="client_entre" property="client_entre"/>
+		<id column="client_kakao" property="client_kakao"/>
+	</resultMap>
+
+
+	<select id="selectColCount" resultType="int">
+    	SELECT COUNT(*) FROM client;
+    </select>
+    
+    <!-- mybatisConfig.xml에서 alias로 해둔 것으로 parameterType 설정.  -->
+    <!-- 이런 방식 말고도 그냥 join.RegisterRequest 로 설정해두어도 된다. -->
+    <insert id="registerMember" parameterType="RegisterVO">
+    	insert into client (client_name, client_id, client_pwd, client_email, client_address, client_tel, client_entre, client_kakao) 
+    	values (#{name},#{id},#{pwd},#{email},#{address},#{tel},0,0);
+    </insert>
+	
+	<select id="dupID" parameterType="RegisterVO" resultType="String" >
+		select client_id from client where client_id = #{id}
+	</select>
+	
+	<select id="Login" parameterType="LoginVO" resultType="Map">
+		select * from client where client_id = #{id} and client_pwd = #{pwd}
+	</select>
+	
+	<select id="myPageInfo" parameterType="String" resultMap="myPageInfo">
+		select * from client where client_id = #{id}
+	</select>
+	
+	<insert id="registProduct" parameterType="ProductVO">
+		insert into product(category,product_name,product_price,product_value,product_date,product_rating,manager_id) values(#{categoryCode},#{product_name},#{product_price},#{product_value},sysdate(),0,#{manager_id})
+	</insert>
+	
+	<select id="getProductId" parameterType="ProductVO" resultType="int">
+		select product_id from product where product_name = #{product_name} and manager_id = #{manager_id};
+	</select>
+	
+	<insert id="registProductImage" parameterType="ProductImageVO">
+		insert into product_image(pro_img_id,product_id,pro_img_name,pro_img_server,pro_filesize) values(#{pro_img_id},#{product_id},#{pro_img_name},#{pro_img_server},#{pro_filesize});
+	</insert>
+	
+</mapper>

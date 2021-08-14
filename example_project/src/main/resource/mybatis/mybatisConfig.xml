@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-config.dtd"> 
+
+<configuration> 
+	<typeAliases> <!-- RegisterRequest를 paramaterType으로 쓰기위해 해당 클래스 타입을 RegisterVO라는 이름으로 매핑 -->	
+		<typeAlias alias="RegisterVO" type="join.RegisterRequest" />
+		<typeAlias alias="LoginVO" type="login.LoginRequest" />
+		<typeAlias alias="ProductVO" type="product.ProductRequest"/>
+		<typeAlias alias="ProductImageVO" type="product.ProductImageRequest" />
+	</typeAliases>
+	
+
+
+</configuration>
+
